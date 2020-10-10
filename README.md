@@ -1,10 +1,11 @@
-# Docker-FELK-PostgresJDBC
+# 🚀 Docker-FELK-PostgresJDBC
 
-- Configurations for deploying Elastic-Logstash-Kibana with data collector Filebeat on Docker
+- Configurations for deploying Filebeat-Logstash-Elasticsearch-Kibana to collect logs from other running containers and directly synchronize from current running database (also on docker container).
+- Obviously, it will be easier to deploy the database on the same docker-compose, however in real scenarios, database and FELK won't always go hand in hand.
 
-## Docker
+## 🐳 Docker
 
-- Download and Install Docker at https://www.docker.com
+- Download and Install [Docker](https://www.docker.com)
 
 ```
     cd /Docker-FELK-PostgresJDBC
@@ -30,6 +31,7 @@ Ports used for config. :
 
 - Important is to declare the version in ELK and Filebeat in the .env with the environment variable, here in example is D_VERSION.
 - The D_VERSION used in this platform is 7.7.1
+- 🧨🧨🧨 Note: error of host name => localhost ist not accepted, if you deploy your database on docker. Depending on the machine that docker runs, for example for window machine the database host docker.for.win.localhost whereas for linux docker.host.internal, or if there still occurs an error, another option that determining the IP that the docker container is running, then replace the IP to the database host.
 
 ### Kibana
 

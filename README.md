@@ -8,7 +8,10 @@
 - Download and Install [Docker](https://www.docker.com)
 
 ```
-    cd /Docker-FELK-PostgresJDBC
+    cd /Docker-FELK-PostgresJDBC/Postgres
+    docker-compose build
+    docker-compose up
+    cd /Docker-FELK-PostgresJDBC/FELK
     docker-compose build
     docker-compose up
 ```

@@ -1,0 +1,79 @@
+version: "3"
+services:
+  elasticsearch:
+    build: 
+      context: elasticsearch/
+      args: 
+        D_VERSION: $D_VERSION
+    volumes:
+      - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+      ELASTIC_PASSWORD: password
+      discovery.type: single-node
+    networks:
+      - elk
+
+  logstash:
+    build: 
+      context: logstash/
+      args:
+        D_VERSION: $D_VERSION
+    volumes:
+      - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml
+      - ./logstash/pipeline:/usr/share/logstash/pipeline:ro
+    ports:
+      - 5044:5044
+    environment:
+      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+      LOGSTASH_JDBC_URL: $LOGSTASH_JDBC_URL
+      LOGSTASH_JDBC_DRIVER: $LOGSTASH_JDBC_DRIVER
+      LOGSTASH_JDBC_DRIVER_JAR_LOCATION: $LOGSTASH_JDBC_DRIVER_JAR_LOCATION
+      LOGSTASH_JDBC_USERNAME: $LOGSTASH_JDBC_USERNAME
+      LOGSTASH_JDBC_PASSWORD: $LOGSTASH_JDBC_PASSWORD
+      LOGSTASH_ELASTICSEARCH_HOST: $LOGSTASH_ELASTICSEARCH_HOST
+    networks:
+      - elk
+    depends_on:
+      - elasticsearch
+
+  kibana:
+    build: 
+      context: kibana/
+      args: 
+        D_VERSION: $D_VERSION
+    volumes:
+     - ./kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml
+    ports:
+      - "5601:5601"
+    networks:
+      - elk
+    depends_on:
+      - elasticsearch
+
+  filebeat:
+    build: 
+      context: filebeat/
+      args: 
+        D_VERSION: $D_VERSION
+    user: root
+    volumes:
+      - ./filebeat/config/filebeat.yml:/usr/share/filebeat/filebeat.yml
+      # extra added
+      - /var/lib/docker/containers/:/var/lib/docker/containers/:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+      # when exists .log file
+      # - ./logs:/var/log
+    networks:
+      - elk
+    depends_on:
+      - elasticsearch
+      - logstash
+networks:
+  elk:
+    driver: bridge
+volumes:
+  elasticsearch:

@@ -53,4 +53,5 @@ Ports used for config. :
 
 - Running on localhost:5061 as an entry point to Kibana interface.
 - For default the id and password corresponding to "elastic" and "password".
+- Create new index and match to filter field.
 - Remember to change reload in Kibana from default "last 15 minutes" to "Last 90 days" to observe the whole example data from docker containers

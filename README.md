@@ -16,6 +16,20 @@
     docker-compose up
 ```
 
+## 🚀 DBeaver
+
+- 💥Download and install DBeaver as GUI configuration to the PostgreSQL database
+- There is a button (+ 🔌) --> select PostgreSQL.
+- Configuration with localhost:5432
+
+```
+    POSTGRES_USER=postgres
+    POSTGRES_USER=postgres
+    POSTGRES_PASSWORD=postgress
+```
+
+- Execute the script.sql file
+
 ## Filebeat
 
 - In filebeat.yml, there are codes for reading .log files (commented out) and instant docker inputs

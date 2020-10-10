@@ -24,8 +24,7 @@
 
 ```
     POSTGRES_USER=postgres
-    POSTGRES_USER=postgres
-    POSTGRES_PASSWORD=postgress
+    POSTGRES_PASSWORD=password
 ```
 
 - Execute the script.sql file
